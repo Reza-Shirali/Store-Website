@@ -14,13 +14,23 @@ function App() {
   const [filterCategory, setFilterCategory] = useState("All");
   const [searchInput, setSearchInput] = useState("");
   const [counterProduct, setCounterProduct] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const itemsPerPage = 10;
+
   console.log(products);
 
+  // Show Counter Products Based on Pagination
   useEffect(() => {
-    setCounterProduct(searchProduct.length);
-  }, [searchProduct]);
-  console.log(counterProduct);
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentProducts = searchProduct.slice(
+      indexOfFirstItem,
+      indexOfLastItem
+    );
+
+    setCounterProduct(currentProducts.length);
+  }, [searchProduct, currentPage]);
 
   // Search Handler
   const searchHandler = () => {
@@ -33,6 +43,7 @@ function App() {
       );
     });
     setSearchProduct(searchProducts);
+    setCurrentPage(1);
   };
 
   // Filter Handler
@@ -44,6 +55,7 @@ function App() {
       });
     }
     setSearchProduct(filterProducts);
+    setCurrentPage(1);
   };
 
   // Fetch Data For Api
@@ -90,7 +102,13 @@ function App() {
                   </span>
                 </div>
               ) : (
-                <HomePage products={searchProduct} counterProduct={counterProduct} />
+                <HomePage
+                  products={searchProduct}
+                  counterProduct={counterProduct}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  itemsPerPage={itemsPerPage}
+                />
               )
             }
           />

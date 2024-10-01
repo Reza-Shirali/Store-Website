@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ProductList = ({ renderedProducts }) => {
+const ProductList = ({ currentProducts }) => {
   return (
     <>
-      {renderedProducts.map((product) => {
+      {currentProducts.map((product) => {
         return (
           <li
             key={product.id}

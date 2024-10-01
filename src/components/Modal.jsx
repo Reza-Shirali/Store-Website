@@ -3,8 +3,8 @@ import React,{ useEffect } from "react";
 const Modal = ({ handleCloseModal }) => {
   // Key Enter
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (event.key === "Enter") {
+    const handleKeyDown = (e) => {
+      if (e.key === "Enter") {
         handleCloseModal();
       }
     };
